@@ -100,5 +100,5 @@ const actualizarCarrito = () => {
     contenedorCarrito.appendChild(div);
   });
   const precioTotal = document.getElementById("precioTotal");
-  precioTotal.innerText = carrito.reduce((i, prod) => i + prod.precio, 0);
+  precioTotal.innerText = carrito.reduce((i, prod) => i + prod.precio * prod.cantidad, 0);
 };
