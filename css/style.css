@@ -50,7 +50,46 @@
   background-color:#554836;
   color: white;
 }
+
+.modal-header{
+  background-color: #cbdcb5;
+}
+
+.card-body{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.boton-eliminar{
+  background-color: #554836;
+  border: solid 2px black;
+  border-radius: 10px;
+  padding: 5px;
+  color: white;
+
+}
+.botonCarrito{
+  background-color: transparent;
+  position: absolute;
+  left: 85vw;
+  top: 60px;
+}
+.botonCarrito:hover{
+  background-color: #cbdcb5;
+}
+
+.productoElegido{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
 .saludoBienvenida{
+  display: flex;
+  justify-content: center;
+  align-items: center;
   position: relative;
-  top: 80px;
+  top: 40px;
+
 }
