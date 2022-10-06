@@ -23,6 +23,16 @@ productos.push(
 
 let bienvenida = document.getElementById("saludo");
 let nombre = prompt("Hola! Cómo te llamas?");
+let usuarioStorage = sessionStorage.getItem("nombre");
+if(usuarioStorage != null){
+  nombre = usuarioStorage
+  saludar(nombre);
+}else{
+ let mensaje = 'Por favor, ingrese su nombre'
+ alert(mensaje);
+
+}
+
 function saludar(nombre) {
   const titulo = document.createElement("h2");
   titulo.classList.add("saludoBienvenida");
@@ -35,6 +45,13 @@ const contenedorProductos = document.getElementById("contenedorProductos");
 
 const botonVaciar = document.getElementById("vaciar-carrito");
 let carrito = [];
+
+document.addEventListener('DOMContentLoaded', () => {
+  if (localStorage.getItem('carrito')){
+      carrito = JSON.parse(localStorage.getItem('carrito'))
+      actualizarCarrito()
+  }
+})
 
 botonVaciar.addEventListener("click", () => {
   carrito.length = 0;
@@ -89,16 +106,30 @@ const contenedorCarrito = document.getElementById(`carrito-contenedor`);
 const actualizarCarrito = () => {
   contenedorCarrito.innerHTML = " ";
 
+const eliminarDelCarrito = (prodId) => {
+  const item = carrito.find((prod) => prod.id === prodId)
+  const indice = carrito.indexOf(item)
+  carrito.splice(indice,  1);
+  actualizarCarrito();
+}
+
   carrito.forEach((prod) => {
     const div = document.createElement("div");
     div.className = "productoElegido";
     div.innerHTML = `
     <p>${prod.nombre}</p>
     <p>Precio: $${prod.precio}</p>
-    <p>Cantidad: <span id="cantidad">${prod.cantidad}</span></p>  `;
+    <p>Cantidad: <span id="cantidad">${prod.cantidad}</span></p>  
+    <button onclick="eliminarDelCarrito(${prod.id})" class="borrarUno" ><img src="./img/eliminar.png" alt=""></button>`;
 
     contenedorCarrito.appendChild(div);
+
+    localStorage.setItem('carrito', JSON.stringify(carrito))
+
   });
   const precioTotal = document.getElementById("precioTotal");
   precioTotal.innerText = carrito.reduce((i, prod) => i + prod.precio * prod.cantidad, 0);
 };
+
+
+
