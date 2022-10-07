@@ -21,10 +21,11 @@ productos.push(
   new producto("4", "Bálsamo labial", 1200, 1, `./img/balsamo-labial.png`),
 );
 
+/* // parte problematica
 let bienvenida = document.getElementById("saludo");
 let nombre = prompt("Hola! Cómo te llamas?");
 let usuarioStorage = sessionStorage.getItem("nombre");
-if(usuarioStorage != null){
+if(usuarioStorage){
   nombre = usuarioStorage
   saludar(nombre);
 }else{
@@ -40,6 +41,13 @@ function saludar(nombre) {
   bienvenida.appendChild(titulo);
 }
 saludar(nombre);
+// */
+/* let nombreStorage = sessionStorage.getItem("nombre")
+if(nombreStorage){
+  saludar(nombre)
+}else{
+let nombre = prompt("Hola! Cómo te llamas?");
+} */
 
 const contenedorProductos = document.getElementById("contenedorProductos");
 
