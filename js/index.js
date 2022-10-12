@@ -21,42 +21,21 @@ productos.push(
   new producto("4", "Bálsamo labial", 1200, 1, `./img/balsamo-labial.png`),
 );
 
-/* // parte problematica
-let bienvenida = document.getElementById("saludo");
-let nombre = prompt("Hola! Cómo te llamas?");
-let usuarioStorage = sessionStorage.getItem("nombre");
-if(usuarioStorage){
-  nombre = usuarioStorage
-  saludar(nombre);
-}else{
- let mensaje = 'Por favor, ingrese su nombre'
- alert(mensaje);
-
-}
-
-function saludar(nombre) {
-  const titulo = document.createElement("h2");
-  titulo.classList.add("saludoBienvenida");
-  titulo.innerHTML = ` Bienvenido/a a la tienda, ${nombre}!`;
-  bienvenida.appendChild(titulo);
-}
-saludar(nombre);
-// */
-/* let nombreStorage = sessionStorage.getItem("nombre")
-if(nombreStorage){
-  saludar(nombre)
-}else{
-let nombre = prompt("Hola! Cómo te llamas?");
-} */
-
 const contenedorProductos = document.getElementById("contenedorProductos");
 
 const botonVaciar = document.getElementById("vaciar-carrito");
-let carrito = [];
 
+let carrito = [];
+let carritoStorage = JSON.parse(localStorage.getItem("carrito"));
+
+/* document.addEventListener('DOMContentLoaded', () => {
+  let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+  console.log(carrito)
+})
+ */
 document.addEventListener('DOMContentLoaded', () => {
-  if (localStorage.getItem('carrito')){
-      carrito = JSON.parse(localStorage.getItem('carrito'))
+  if (carritoStorage){
+      carrito = carritoStorage;
       actualizarCarrito()
   }
 })
@@ -65,6 +44,29 @@ botonVaciar.addEventListener("click", () => {
   carrito.length = 0;
   actualizarCarrito();
 });
+
+ /* const agregarAlCarrito = (prodId) => {
+  let productoComprado = carrito.find(item => item.id === prodId);
+  productoComprado === undefined ? carrito.push({ ...prodId, cantidad: 1 }): productoComprado.precio = productoComprado.precio + prodId.precio
+  productoComprado.cantidad++;
+  actualizarCarrito();
+}  */
+const agregarAlCarrito = (prodId) => {
+  const existe = carrito.some (prod => prod.id === prodId)
+  if (existe){
+    const prod = carrito.map (prod =>{
+      if (prod.id === prodId){
+        prod.cantidad++
+      }
+    })
+  } else {
+    const item = productos.find((prod) => prod.id === prodId);
+    carrito.push(item);
+    console.log(carrito);
+};
+actualizarCarrito();
+} 
+
 
 productos.forEach((producto) => {
   const div = document.createElement("div");
@@ -93,21 +95,7 @@ productos.forEach((producto) => {
   });
 });
 
-const agregarAlCarrito = (prodId) => {
-  const existe = carrito.some (prod => prod.id === prodId)
-  if (existe){
-    const prod = carrito.map (prod =>{
-      if (prod.id === prodId){
-        prod.cantidad++
-      }
-    })
-  } else {
-    const item = productos.find((prod) => prod.id === prodId);
-    carrito.push(item);
-    console.log(carrito);
-};
-actualizarCarrito();
-}
+
 
 const contenedorCarrito = document.getElementById(`carrito-contenedor`);
 
@@ -128,7 +116,7 @@ const eliminarDelCarrito = (prodId) => {
     <p>${prod.nombre}</p>
     <p>Precio: $${prod.precio}</p>
     <p>Cantidad: <span id="cantidad">${prod.cantidad}</span></p>  
-    <button onclick="eliminarDelCarrito(${prod.id})" class="borrarUno" ><img src="./img/eliminar.png" alt=""></button>`;
+    <button id="eliminar${prod.id}" class="borrarUno" ><img src="./img/eliminar.png" alt=""></button>`;
 
     contenedorCarrito.appendChild(div);
 
@@ -138,6 +126,7 @@ const eliminarDelCarrito = (prodId) => {
   const precioTotal = document.getElementById("precioTotal");
   precioTotal.innerText = carrito.reduce((i, prod) => i + prod.precio * prod.cantidad, 0);
 };
+
 
 
 
