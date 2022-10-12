@@ -12,13 +12,7 @@ productos.push(
   new producto("1", "Jabón exfoliante", 550, 1, `./img/jabon-exfoliante.png`),
 );
 productos.push(
-  new producto(
-    "2",
-    "Aceite de cutículas",
-    400,
-    1,
-    `./img/aceite-cuticulas.png`,
-  ),
+  new producto("2","Aceite de cutículas", 400, 1,`./img/aceite-cuticulas.png`,),
 );
 productos.push(
   new producto("3", "Rimmel extra volumen", 799, 1, `./img/rimel-volumen.png`),
@@ -28,16 +22,11 @@ productos.push(
 );
 
 const contenedorProductos = document.getElementById("contenedorProductos");
-
 const botonVaciar = document.getElementById("vaciar-carrito");
+const contenedorCarrito = document.getElementById(`carrito-contenedor`);
 
 let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
 
-/* document.addEventListener('DOMContentLoaded', () => {
-  let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
-  console.log(carrito)
-})
- */
 document.addEventListener("DOMContentLoaded", () => {
   actualizarCarrito(carrito);
 });
@@ -48,12 +37,6 @@ botonVaciar.addEventListener("click", () => {
   actualizarCarrito(carrito);
 });
 
-/* const agregarAlCarrito = (prodId) => {
-  let productoComprado = carrito.find(item => item.id === prodId);
-  productoComprado === undefined ? carrito.push({ ...prodId, cantidad: 1 }): productoComprado.precio = productoComprado.precio + prodId.precio
-  productoComprado.cantidad++;
-  actualizarCarrito();
-}  */
 const agregarAlCarrito = (prodId) => {
   const existe = carrito.some((prod) => prod.id === prodId);
   if (existe) {
@@ -65,7 +48,6 @@ const agregarAlCarrito = (prodId) => {
   } else {
     const item = productos.find((prod) => prod.id === prodId);
     carrito.push(item);
-    //console.log(carrito);
   }
   actualizarCarrito(carrito);
 };
@@ -97,17 +79,8 @@ productos.forEach((producto) => {
   });
 });
 
-const contenedorCarrito = document.getElementById(`carrito-contenedor`);
-
 const actualizarCarrito = (carrito) => {
   contenedorCarrito.innerHTML = " ";
-
-  // const eliminarDelCarrito = (prodId) => {
-  //   const item = carrito.find((prod) => prod.id === prodId);
-  //   const indice = carrito.indexOf(item);
-  //   carrito.splice(indice, 1);
-  //   actualizarCarrito();
-  // };
 
   carrito.forEach((prod) => {
     const div = document.createElement("div");
